@@ -17,7 +17,7 @@ format:
 
 ## Исходные данные
 
-1.  Программное обеспечение MacOS 14.5.1 Sequoia
+1.  Программное обеспечение MacOS 15.1.1 Sequoia
 2.  Подсоединенный к Yandex Cloud Organization аккаунт
 
 ## План
@@ -40,7 +40,7 @@ format:
 3.  Создаем чарты и оформляем их в соответствии с заданием: а) Представить в виде круговой диаграммы соотношение внешнего и внутреннего сетевого трафика.
 
 Функция для col:
-```
+```{r}
 IF (([dst] LIKE '12.%' OR [dst] LIKE '13.%' OR [dst] LIKE '14.%') AND ([src] LIKE '12.%' OR [src] LIKE '13.%' OR [src] LIKE '14.%')) THEN "Внутренний трафик" ELSE "Внешний трафик" END
 ```
 
@@ -49,7 +49,7 @@ IF (([dst] LIKE '12.%' OR [dst] LIKE '13.%' OR [dst] LIKE '14.%') AND ([src] LIK
 b)  Представить в виде столбчатой диаграммы соотношение входящего и исходящего трафика из внутреннего сетвого сегмента.
 
 Функция для col1:
-```
+```{r}
 IF (([src] LIKE '12.%' OR [src] LIKE '13.%' OR [src] LIKE '14.%') AND (NOT([dst] LIKE '12.%' OR [dst] LIKE '13.%' OR [dst] LIKE '14.%'))) THEN "Исходящий трафик" ELSEIF (([dst] LIKE '12.%' OR [dst] LIKE '13.%' OR [dst] LIKE '14.%') AND (NOT([src] LIKE '12.%' OR [src] LIKE '13.%' OR [src] LIKE '14.%'))) THEN "Входящий трафик" END
 ```
 
@@ -57,7 +57,7 @@ IF (([src] LIKE '12.%' OR [src] LIKE '13.%' OR [src] LIKE '14.%') AND (NOT([dst]
 
 c)  Построить график активности (линейная диаграмма) объема трафика во времени.
 Функция для col2:
-```
+```{r}
 ROUND(([timestamp] - DATETRUNC([timestamp], "second")) * 100000,2)
 ```
 
