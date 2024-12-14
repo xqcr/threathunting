@@ -1,15 +1,17 @@
 # Практика в DuckDB
-
-[smartasscheeseburger\@gmail.com](mailto:smartasscheeseburger@gmail.com){.email}
+smartasscheeseburger@gmail.com
 
 # Анализ данных сетевого трафика с использованием аналитической in-memory СУБД DuckDB
 
 ## Цель работы
 
-1.  Изучить возможности СУБД DuckDB для обработки и анализ больших данных
-2.  Получить навыки применения DuckDB совместно с языком программирования R
+1.  Изучить возможности СУБД DuckDB для обработки и анализ больших
+    данных
+2.  Получить навыки применения DuckDB совместно с языком
+    программирования R
 3.  Получить навыки анализа метаинфомации о сетевом трафике
-4.  Получить навыки применения облачных технологий хранения, подготовки и анализа данных: Yandex Object Storage, Rstudio Server.
+4.  Получить навыки применения облачных технологий хранения, подготовки
+    и анализа данных: Yandex Object Storage, Rstudio Server.
 
 ## Исходные данные
 
@@ -40,34 +42,29 @@
 library(duckdb)
 ```
 
-```         
-Loading required package: DBI
-```
+    Loading required package: DBI
 
 ``` r
 library(dplyr)
 ```
 
-```         
-Attaching package: 'dplyr'
 
-The following objects are masked from 'package:stats':
+    Attaching package: 'dplyr'
 
-    filter, lag
+    The following objects are masked from 'package:stats':
 
-The following objects are masked from 'package:base':
+        filter, lag
 
-    intersect, setdiff, setequal, union
-```
+    The following objects are masked from 'package:base':
+
+        intersect, setdiff, setequal, union
 
 ``` r
 con <- dbConnect(duckdb())
 dbExecute(con,"CREATE TABLE tbl as SELECT * FROM read_parquet('tm_data.pqt')")
 ```
 
-```         
-[1] 105747730
-```
+    [1] 105747730
 
 1.  Приступаем к выполнению заданий
 
@@ -84,11 +81,18 @@ order by sum(bytes) desc
 limit 1") %>% knitr::kable()
 ```
 
-+--------------+
-| src          |
-+:=============+
-| 13.37.84.125 |
-+--------------+
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">src</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">13.37.84.125</td>
+</tr>
+</tbody>
+</table>
 
 1.  Найдите утечку данных 2
 
@@ -114,57 +118,112 @@ GROUP BY time
 ORDER BY trafictime DESC;") %>% knitr::kable()
 ```
 
-+------+------------+
-| time | trafictime |
-+=====:+===========:+
-| 16   | 4490576    |
-+------+------------+
-| 22   | 4489703    |
-+------+------------+
-| 18   | 4489386    |
-+------+------------+
-| 23   | 4488093    |
-+------+------------+
-| 19   | 4487345    |
-+------+------------+
-| 21   | 4487109    |
-+------+------------+
-| 17   | 4483578    |
-+------+------------+
-| 20   | 4482712    |
-+------+------------+
-| 13   | 169617     |
-+------+------------+
-| 7    | 169241     |
-+------+------------+
-| 0    | 169068     |
-+------+------------+
-| 3    | 169050     |
-+------+------------+
-| 14   | 169028     |
-+------+------------+
-| 6    | 169015     |
-+------+------------+
-| 12   | 168892     |
-+------+------------+
-| 10   | 168750     |
-+------+------------+
-| 2    | 168711     |
-+------+------------+
-| 11   | 168684     |
-+------+------------+
-| 1    | 168539     |
-+------+------------+
-| 4    | 168422     |
-+------+------------+
-| 15   | 168355     |
-+------+------------+
-| 5    | 168283     |
-+------+------------+
-| 9    | 168283     |
-+------+------------+
-| 8    | 168205     |
-+------+------------+
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">time</th>
+<th style="text-align: right;">trafictime</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">4490576</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">4489703</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">4489386</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">4488093</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">4487345</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">4487109</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">4483578</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">4482712</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">169617</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">169241</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">169068</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">169050</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">169028</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">169015</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">168892</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">168750</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">168711</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">168684</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">168539</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">168422</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">168355</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">168283</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">168283</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">168205</td>
+</tr>
+</tbody>
+</table>
 
 ``` r
 dbGetQuery(con,"
@@ -186,11 +245,18 @@ ORDER BY total_bytes DESC
 LIMIT 1;") %>% knitr::kable()
 ```
 
-+-------------+
-| src         |
-+:============+
-| 12.55.77.96 |
-+-------------+
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">src</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">12.55.77.96</td>
+</tr>
+</tbody>
+</table>
 
 1.  Найдите утечку данных 3
 
@@ -204,9 +270,7 @@ WHERE src <> '13.37.84.125'
     AND (dst NOT LIKE '12.%' AND dst NOT LIKE '13.%' AND dst NOT LIKE '14.%');")
 ```
 
-```         
-[1] 38498353
-```
+    [1] 38498353
 
 ``` r
 dbGetQuery(con,"SELECT port, AVG(bytes) AS mean_bytes, MAX(bytes) AS max_bytes, SUM(bytes) AS sum_bytes, MAX(bytes) - AVG(bytes) AS Raz
@@ -217,11 +281,26 @@ ORDER BY Raz DESC
 LIMIT 1;") %>% knitr::kable()
 ```
 
-+------+------------+-----------+-------------+--------+
-| port | mean_bytes | max_bytes | sum_bytes   | Raz    |
-+=====:+===========:+==========:+============:+=======:+
-| 37   | 35089.99   | 209402    | 32136394510 | 174312 |
-+------+------------+-----------+-------------+--------+
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">port</th>
+<th style="text-align: right;">mean_bytes</th>
+<th style="text-align: right;">max_bytes</th>
+<th style="text-align: right;">sum_bytes</th>
+<th style="text-align: right;">Raz</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">35089.99</td>
+<td style="text-align: right;">209402</td>
+<td style="text-align: right;">32136394510</td>
+<td style="text-align: right;">174312</td>
+</tr>
+</tbody>
+</table>
 
 ``` r
 dbGetQuery(con,"SELECT src
@@ -235,15 +314,23 @@ ORDER BY mean_bytes DESC
 LIMIT 1;") %>% knitr::kable()
 ```
 
-+--------------+
-| src          |
-+:=============+
-| 14.31.107.42 |
-+--------------+
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">src</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">14.31.107.42</td>
+</tr>
+</tbody>
+</table>
 
 ## Оценка результата
 
-Был скачан и проведены исследования пакета данных tm_data, были выполнены три задания, которые были указаны в pdf файле.
+Был скачан и проведены исследования пакета данных tm_data, были
+выполнены три задания, которые были указаны в pdf файле.
 
 ## Вывод
 
